@@ -1,0 +1,8 @@
+[package]
+name = "evm-shared"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+primitive-types = { workspace = true }
+thiserror = { workspace = true }

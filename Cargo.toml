@@ -1,0 +1,14 @@
+[workspace]
+members = [
+    "bin/cli",
+    "crates/core",
+    "crates/components",
+    "shared"
+]
+resolver = "2"
+
+[workspace.dependencies]
+primitive-types = "0.12"
+thiserror = "1.0"
+clap = { version = "4.4", features = ["derive"] }
+hex = "0.4"

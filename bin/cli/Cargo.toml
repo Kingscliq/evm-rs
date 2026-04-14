@@ -1,0 +1,10 @@
+[package]
+name = "evm-cli"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = { workspace = true }
+hex = { workspace = true }
+evm-core = { path = "../../crates/core" }
+evm-shared = { path = "../../shared" }
