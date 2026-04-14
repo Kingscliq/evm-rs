@@ -177,19 +177,9 @@ dependencies = [
 ]
 
 [[package]]
-name = "evm-components"
-version = "0.1.0"
-dependencies = [
- "evm-shared",
- "primitive-types",
- "thiserror",
-]
-
-[[package]]
 name = "evm-core"
 version = "0.1.0"
 dependencies = [
- "evm-components",
  "evm-shared",
  "primitive-types",
  "thiserror",

@@ -1,14 +1,11 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+pub mod stack;
+pub mod memory;
+pub mod storage;
+pub mod opcodes;
+pub mod evm;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+// Re-export common structs
+pub use stack::Stack;
+pub use memory::Memory;
+pub use storage::Storage;
+pub use evm::Evm;

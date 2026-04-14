@@ -7,4 +7,4 @@ edition = "2021"
 clap = { workspace = true }
 hex = { workspace = true }
 evm-core = { path = "../../crates/core" }
-evm-shared = { path = "../../shared" }
+evm-shared = { path = "../../crates/shared" }

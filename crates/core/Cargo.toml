@@ -4,7 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-evm-components = { path = "../components" }
-evm-shared = { path = "../../shared" }
+evm-shared = { path = "../shared" }
 primitive-types = { workspace = true }
 thiserror = { workspace = true }

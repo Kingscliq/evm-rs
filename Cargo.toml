@@ -2,8 +2,7 @@
 members = [
     "bin/cli",
     "crates/core",
-    "crates/components",
-    "shared"
+    "crates/shared"
 ]
 resolver = "2"
 
