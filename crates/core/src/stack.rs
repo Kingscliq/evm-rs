@@ -17,17 +17,24 @@ impl Stack {
 
     /// Pushes a 256-bit value onto the stack
     pub fn push(&mut self, value: U256) -> Result<(), EvmError> {
-        todo!("Task 01: Implement stack push with 1024 depth limit")
+        if self.data.len() >= MAX_STACK_SIZE {
+            return Err(EvmError::StackOverflow);
+        }
+        self.data.push(value);
+        Ok(())
     }
 
     /// Pops the top value off the stack
     pub fn pop(&mut self) -> Result<U256, EvmError> {
-        todo!("Task 01: Implement stack pop with underflow handling")
+        self.data.pop().ok_or(EvmError::StackUnderflow)
     }
 
     /// Peeks at an element `depth` from the top (0 is the top element)
     pub fn peek(&self, depth: usize) -> Result<U256, EvmError> {
-        todo!("Task 03: Implement stack peek for opcodes like DUP")
+        if depth >= self.data.len() {
+            return Err(EvmError::StackUnderflow);
+        }
+        Ok(self.data[self.data.len() - 1 - depth])
     }
 
     /// Returns the current number of items on the stack
