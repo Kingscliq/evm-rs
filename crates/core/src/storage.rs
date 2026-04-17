@@ -17,12 +17,12 @@ impl Storage {
     /// According to the EVM specification, reading an uninitialized storage key 
     /// does not error; it naturally returns 0.
     pub fn read(&self, key: U256) -> U256 {
-        todo!("Task 03: Implement persistent storage reading")
+        *self.data.get(&key).unwrap_or(&U256::zero())
     }
 
     /// Writes a 256-bit value into the storage database at `key`.
     pub fn write(&mut self, key: U256, value: U256) {
-        todo!("Task 03: Implement persistent storage writing")
+        self.data.insert(key, value);
     }
 }
 

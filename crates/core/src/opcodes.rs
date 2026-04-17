@@ -14,7 +14,13 @@ pub const MUL: u8 = 0x02;
 pub const PUSH1: u8 = 0x60;
 pub const PUSH32: u8 = 0x7f;
 
-/// Returns the strict, static gas cost for a given opcode independent of memory expansion.
+// static gas cost for a given opcode independent of memory expansion.
 pub fn static_gas_cost(opcode: u8) -> u64 {
-    todo!("Task 01: Implement gas cost lookup based on given opcode")
+    match opcode {
+        STOP => GAS_ZERO,
+        ADD => GAS_VERYLOW,
+        MUL => GAS_LOW,
+        op if (PUSH1..=PUSH32).contains(&op) => GAS_VERYLOW,
+        _ => 0, // Fallback for unsupported opcodes in this phase
+    }
 }
