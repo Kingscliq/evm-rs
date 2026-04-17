@@ -1,4 +1,3 @@
-use evm_shared::EvmError;
 use primitive_types::U256;
 
 #[derive(Debug, Clone, Default)]

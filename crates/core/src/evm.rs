@@ -12,8 +12,6 @@ pub struct Evm {
     pub stack: Stack,
     pub memory: Memory,
     pub storage: Storage,
-    
-    // Gas accounting mapped out!
     pub gas_remaining: u64,
 }
 
@@ -29,9 +27,49 @@ impl Evm {
         }
     }
 
-    /// The main Fetch-Decode-Execute loop!
+    /// The Fetch-Decode-Execute loop
     pub fn run(&mut self) -> Result<(), EvmError> {
-        todo!("Task 01: Implement Fetch-Decode-Execute loop with gas metering")
+        while self.pc < self.code.len() {
+            let opcode = self.code[self.pc];
+            self.pc += 1;
+
+            // 1. Metering: Charge static gas
+            let gas_cost = static_gas_cost(opcode);
+            if self.gas_remaining < gas_cost {
+                return Err(EvmError::OutOfGas);
+            }
+            self.gas_remaining -= gas_cost;
+
+            // 2. Decode & Execute
+            match opcode {
+                STOP => break, // Exit loop successfully
+
+                ADD => {
+                    let a = self.stack.pop()?;
+                    let b = self.stack.pop()?;
+                    self.stack.push(a.overflowing_add(b).0)?;
+                }
+
+                MUL => {
+                    let a = self.stack.pop()?;
+                    let b = self.stack.pop()?;
+                    self.stack.push(a.overflowing_mul(b).0)?;
+                }
+
+                PUSH1 => {
+                    if self.pc >= self.code.len() {
+                        return Err(EvmError::InvalidBytecode);
+                    }
+                    let value = self.code[self.pc];
+                    self.pc += 1;
+                    self.stack.push(U256::from(value))?;
+                }
+
+                _ => return Err(EvmError::InvalidOpcode(opcode)),
+            }
+        }
+
+        Ok(())
     }
 }
 

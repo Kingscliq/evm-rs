@@ -6,8 +6,10 @@ pub enum EvmError {
     StackUnderflow,
     #[error("Stack overflow: tried to push more than 1024 items")]
     StackOverflow,
-    #[error("Invalid Opcode encountered")]
-    InvalidOpcode,
+    #[error("Invalid Opcode encountered: {0:#x}")]
+    InvalidOpcode(u8),
     #[error("Out of gas")]
     OutOfGas,
+    #[error("Invalid bytecode: expected data missing")]
+    InvalidBytecode,
 }
