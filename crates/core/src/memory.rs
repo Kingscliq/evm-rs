@@ -15,11 +15,19 @@ impl Memory {
     pub fn read_word(&self, offset: usize) -> U256 {
         let mut bytes = [0u8; 32];
         for i in 0..32 {
-            if offset + i < self.data.len() {
-                bytes[i] = self.data[offset + i];
-            }
+            bytes[i] = self.read_byte(offset + i);
         }
         U256::from_big_endian(&bytes)
+    }
+
+    /// Read a single byte from memory at `offset`.
+    /// Returns 0 if reading past the current memory size.
+    pub fn read_byte(&self, offset: usize) -> u8 {
+        if offset < self.data.len() {
+            self.data[offset]
+        } else {
+            0
+        }
     }
 
     /// Store a 32-byte (256-bit) word into memory at `offset`.
@@ -36,11 +44,26 @@ impl Memory {
 
     /// Expands the linear memory with zero-padding if the requested write range 
     /// goes beyond the current total capacity.
-    fn expand_if_needed(&mut self, offset: usize, size: usize) {
+    pub fn expand_if_needed(&mut self, offset: usize, size: usize) {
         let required_size = offset + size;
         if required_size > self.data.len() {
             self.data.resize(required_size, 0); 
         }
+    }
+
+    /// Store a single byte into memory at `offset`.
+    pub fn store_byte(&mut self, offset: usize, value: u8) {
+        self.expand_if_needed(offset, 1);
+        self.data[offset] = value;
+    }
+
+    /// Copies `size` bytes from `src` to `dest`.
+    pub fn copy(&mut self, src: usize, dest: usize, size: usize) {
+        if size == 0 { return; }
+        // Ensure both src and dest ranges are covered by expanding memory
+        let max_needed = std::cmp::max(src + size, dest + size);
+        self.expand_if_needed(max_needed, 0);
+        self.data.copy_within(src..src + size, dest);
     }
 
     /// Returns the current size of the memory array in bytes

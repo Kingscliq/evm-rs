@@ -7,3 +7,4 @@ edition = "2021"
 evm-shared = { path = "../shared" }
 primitive-types = { workspace = true }
 thiserror = { workspace = true }
+tiny-keccak = { version = "2.0", features = ["keccak"] }

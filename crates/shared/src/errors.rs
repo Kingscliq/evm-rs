@@ -12,4 +12,8 @@ pub enum EvmError {
     OutOfGas,
     #[error("Invalid bytecode: expected data missing")]
     InvalidBytecode,
+    #[error("Invalid Jump destination: {0:#x}")]
+    InvalidJump(usize),
+    #[error("Execution reverted")]
+    Reverted(Vec<u8>),
 }

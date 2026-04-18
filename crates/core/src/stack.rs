@@ -41,6 +41,24 @@ impl Stack {
     pub fn len(&self) -> usize {
         self.data.len()
     }
+
+    /// Returns the stack as a list of hex strings for display
+    pub fn to_hex_strings(&self) -> Vec<String> {
+        self.data.iter().map(|v| format!("{:#x}", v)).collect()
+    }
+
+    /// Swaps the top element with the element at `depth` from the top
+    /// 0 would be swapping the top with itself (a no-op)
+    pub fn swap(&mut self, depth: usize) -> Result<(), EvmError> {
+        let len = self.data.len();
+        if depth >= len {
+            return Err(EvmError::StackUnderflow);
+        }
+        let last = len - 1;
+        let target = last - depth;
+        self.data.swap(last, target);
+        Ok(())
+    }
 }
 
 #[cfg(test)]

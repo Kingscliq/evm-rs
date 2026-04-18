@@ -2,6 +2,7 @@ pub mod stack;
 pub mod memory;
 pub mod storage;
 pub mod opcodes;
+pub mod context;
 pub mod evm;
 
 // Re-export common structs
